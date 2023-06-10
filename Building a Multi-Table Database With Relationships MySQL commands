@@ -1,0 +1,152 @@
+-- Cretae the DB ---
+
+
+CREATE DATABASE Music DEFAULT CHARACTER SET utf8;
+USE Music;
+
+
+
+
+-- Create Tables inside the music DB --
+
+
+-- Each table has its own columns, data types, and constraints
+-- ENGINE keyword to specify the storage engine for each table
+
+
+
+
+USE Music;
+
+
+CREATE TABLE Artist (
+  artist_id INTEGER NOT NULL AUTO_INCREMENT,
+  name VARCHAR(255),
+  PRIMARY KEY(artist_id)
+) ENGINE = InnoDB;
+
+CREATE TABLE Album (
+  album_id INTEGER NOT NULL AUTO_INCREMENT,
+  title VARCHAR(255),
+  artist_id INTEGER,
+
+  PRIMARY KEY(album_id),
+  INDEX USING BTREE (title),
+
+  CONSTRAINT FOREIGN KEY (artist_id)
+    REFERENCES Artist (artist_id)
+    ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB;
+
+CREATE TABLE Genre (
+  genre_id INTEGER NOT NULL AUTO_INCREMENT,
+  name VARCHAR(255),
+  PRIMARY KEY(genre_id)
+) ENGINE = InnoDB;
+
+CREATE TABLE Track (
+  track_id INTEGER NOT NULL AUTO_INCREMENT,
+  title VARCHAR(255),
+  len INTEGER,
+  rating INTEGER,
+  count INTEGER,
+  album_id INTEGER,
+  genre_id INTEGER,
+
+  PRIMARY KEY(track_id),
+  INDEX USING BTREE (title),
+
+  CONSTRAINT FOREIGN KEY (album_id) REFERENCES Album (album_id)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT FOREIGN KEY (genre_id) REFERENCES Genre (genre_id)
+    ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB;
+
+
+
+
+
+-- Content to be entered inside the MySQL DB --
+
+
+
+
+INSERT INTO Artist (name) VALUES ('Kendrick Lamar');
+INSERT INTO Artist (name) VALUES ('Eminem');
+INSERT INTO Artist (name) VALUES ('Ariana Grande');
+INSERT INTO Artist (name) VALUES ('J. Cole');
+INSERT INTO Artist (name) VALUES ('Central Cee');
+
+INSERT INTO Genre (name) VALUES ('Hip-hop');
+INSERT INTO Genre (name) VALUES ('Rap');
+INSERT INTO Genre (name) VALUES ('Pop');
+
+INSERT INTO Album (title, artist_id) VALUES ('DAMN.', 1);
+INSERT INTO Album (title, artist_id) VALUES ('The Slim Shady LP', 2);
+INSERT INTO Album (title, artist_id) VALUES ('Positions', 3);
+INSERT INTO Album (title, artist_id) VALUES ('The Off-Season', 4);
+INSERT INTO Album (title, artist_id) VALUES ('Wild West', 5);
+
+INSERT INTO Track (title, rating, len, count, album_id, genre_id)
+    VALUES ('HUMBLE.', 5, 177, 0, 1, 1);
+INSERT INTO Track (title, rating, len, count, album_id, genre_id)
+    VALUES ('DNA.', 5, 200, 0, 1, 1);
+INSERT INTO Track (title, rating, len, count, album_id, genre_id)
+    VALUES ('Lose Yourself', 5, 321, 0, 2, 2);
+INSERT INTO Track (title, rating, len, count, album_id, genre_id)
+    VALUES ('The Real Slim Shady', 5, 284, 0, 2, 2);
+INSERT INTO Track (title, rating, len, count, album_id, genre_id)
+    VALUES ('Positions', 5, 172, 0, 3, 3);
+INSERT INTO Track (title, rating, len, count, album_id, genre_id)
+    VALUES ('34+35', 5, 173, 0, 3, 3);    
+INSERT INTO Track (title, rating, len, count, album_id, genre_id)
+    VALUES ('pov', 5, 230, 0, 3, 3); 
+INSERT INTO Track (title, rating, len, count, album_id, genre_id)
+    VALUES ('95 South', 5, 193, 0, 4, 1); 
+INSERT INTO Track (title, rating, len, count, album_id, genre_id)
+    VALUES ('My Life', 5, 185, 0, 4, 1); 
+INSERT INTO Track (title, rating, len, count, album_id, genre_id)
+    VALUES ('Pray', 5, 226, 0, 5, 1); 
+INSERT INTO Track (title, rating, len, count, album_id, genre_id)
+    VALUES ('Little Bit of This', 5, 191, 0, 5, 1);
+    
+
+
+
+
+
+
+-- Select for specific operations--
+
+
+
+
+
+-- All the data joined up sorted in ascending order by the album title
+
+
+
+SELECT Album.title, Artist.name, Track.title, Genre.name
+FROM Album
+JOIN Artist ON Album.artist_id = Artist.artist_id
+JOIN Track ON Album.album_id = Track.album_id
+JOIN Genre ON Track.genre_id = Genre.genre_id
+ORDER BY Album.title ASC;
+    
+
+
+
+-- All of the genres for a particular artist. Hint - use JOIN, DISTINCT and WHERE
+
+
+
+SELECT DISTINCT Genre.name, Artist.name
+FROM Genre
+JOIN Track ON Genre.genre_id = Track.genre_id
+JOIN Album ON Track.album_id = Album.album_id
+JOIN Artist ON Album.artist_id = Artist.artist_id
+WHERE Artist.name = 'Kendrick Lamar';
+
+
+
+
