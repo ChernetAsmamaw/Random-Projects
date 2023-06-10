@@ -5,32 +5,31 @@ CREATE DATABASE roster;
 USE roster;
 
 DROP TABLE IF EXISTS Member;
-DROP TABLE IF EXISTS `User`;
+DROP TABLE IF EXISTS User;
 DROP TABLE IF EXISTS Course;
 
-CREATE TABLE `User` (
-    user_id     INTEGER NOT NULL AUTO_INCREMENT,
-    name        VARCHAR(128) UNIQUE,
-    PRIMARY KEY(user_id)
+CREATE TABLE User (
+  user_id INTEGER NOT NULL AUTO_INCREMENT,
+  name VARCHAR(128) UNIQUE,
+  PRIMARY KEY(user_id)
 ) ENGINE=InnoDB CHARACTER SET=utf8;
 
 CREATE TABLE Course (
-    course_id     INTEGER NOT NULL AUTO_INCREMENT,
-    title         VARCHAR(128) UNIQUE,
-    PRIMARY KEY(course_id)
+  course_id INTEGER NOT NULL AUTO_INCREMENT,
+  title VARCHAR(128) UNIQUE,
+  PRIMARY KEY(course_id)
 ) ENGINE=InnoDB CHARACTER SET=utf8;
 
 CREATE TABLE Member (
-    user_id       INTEGER,
-    course_id     INTEGER,
-    role          INTEGER,
-
-    CONSTRAINT FOREIGN KEY (user_id) REFERENCES `User` (user_id)
-      ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT FOREIGN KEY (course_id) REFERENCES Course (course_id)
-       ON DELETE CASCADE ON UPDATE CASCADE,
-
-    PRIMARY KEY (user_id, course_id)
+  user_id INTEGER,
+  course_id INTEGER,
+  role INTEGER,
+  insert_order INTEGER, -- new column to store order of insertion
+  CONSTRAINT FOREIGN KEY (user_id) REFERENCES `User` (user_id)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT FOREIGN KEY (course_id) REFERENCES Course (course_id)
+    ON DELETE CASCADE ON UPDATE CASCADE,
+  PRIMARY KEY (user_id, course_id, insert_order)
 ) ENGINE=InnoDB CHARACTER SET=utf8;
 
 
@@ -38,7 +37,7 @@ CREATE TABLE Member (
 
 
 
-INSERT INTO User (name) VALUES 
+INSERT INTO `User` (name) VALUES 
 ('Lochlann'),
 ('Elana'),
 ('Georgi'),
@@ -62,21 +61,20 @@ INSERT INTO Course (title) VALUES
 
 INSERT INTO Member (user_id, course_id, role) VALUES 
 (1, 1, 1), -- Lochlann, si106, Instructor
-(2, 1, 2), -- Elana, si106, Learner
-(3, 1, 2), -- Georgi, si106, Learner
-(4, 1, 2), -- Jaxson, si106, Learner
-(5, 1, 2), -- Naia, si106, Learner
+(2, 1, 0), -- Elana, si106, Learner
+(3, 1, 0), -- Georgi, si106, Learner
+(4, 1, 0), -- Jaxson, si106, Learner
+(5, 1, 0), -- Naia, si106, Learner
 (6, 2, 1), -- Keela, si110, Instructor
-(7, 2, 2), -- Greg, si110, Learner
-(8, 2, 2), -- Marnie, si110, Learner
-(9, 2, 2), -- Marysia, si110, Learner
-(10, 2, 2), -- Philip, si110, Learner
+(7, 2, 0), -- Greg, si110, Learner
+(8, 2, 0), -- Marnie, si110, Learner
+(9, 2, 0), -- Marysia, si110, Learner
+(10, 2, 0), -- Philip, si110, Learner
 (11, 3, 1), -- Kaedyn, si206, Instructor
-(12, 3, 2), -- Aiva, si206, Learner
-(13, 3, 2), -- Courtny, si206, Learner
-(14, 3, 2), -- Isobel, si206, Learner
-(15, 3, 2); -- Tammie, si206, Learner
-
+(12, 3, 0), -- Aiva, si206, Learner
+(13, 3, 0), -- Courtny, si206, Learner
+(14, 3, 0), -- Isobel, si206, Learner
+(15, 3, 0); -- Tammie, si206, Learner
 
 
 
