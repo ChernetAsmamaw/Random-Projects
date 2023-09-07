@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Little Lemon</title>
+
+    <meta property="og:title" content="Our Menu">
+    <meta property="og:type"  content="website">
+    <meta property="og:image" content="logo.png">
+    <meta property="og:url"   content="https://littlelemon/">
+    <meta property="og:description" content="Little Lemon is a family-owned Mediterranean restaurant, focused on traditional recipes served with a modern twist.">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:site_name" content="Little Lemon">
+
+    <link rel="stylesheet" href="booking_styles.css">
+</head>
+<body>
+    <header>
+        <img src="logo.png">
+    </header>
+    <main>
+        <h1>Book a Table</h1\>
+            <form method="POST">
+                <div>
+                    <label for="User_email">Email</label>
+                    <input type="email" name="User_email" id="User_email" placeholder="Enter your email" required>
+                </div>
+                <div>
+                    <label for="booking_date">Date</label>
+                    <input type="date" name="booking_date" id="booking_date" required>
+                </div>
+                <div>
+                    <label for="number_of_people">Number of number_of_people</label>
+                    <input type="number" name="number_of_people" id="number_of_people" required min="1" max="8">
+                </div>
+                <div>
+                    <label>"I agree to the cancellation policy".</label>
+                    <input type="checkbox" name="cancellation_policy" id="cancellation_policy" required>
+                </div>
+                <button type="submit">Book Now</button>
+            </form>
+    </main>
+    <footer>
+      @Copyright littlelemon  
+    </footer>
+    
+</body>
+</html>
